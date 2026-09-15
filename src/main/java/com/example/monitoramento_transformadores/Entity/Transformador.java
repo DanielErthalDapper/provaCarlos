@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "transformador")
@@ -15,10 +15,13 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
+/**
+ * Entidade Transformador
+ * <p>Ativo físico monitorado na rede elétrica<p/>*/
 public class Transformador
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "numero_serie", unique = true, nullable = false)
@@ -44,11 +47,11 @@ public class Transformador
             name = "transformador_tecnico",
             joinColumns = @JoinColumn(name = "transformador_id"),
             inverseJoinColumns = @JoinColumn(name = "tecnico_id"))
-    private Set<Tecnico> tecnicos;
+    private Set<Tecnico> tecnicos = new HashSet<>();
 
-    @OneToMany(mappedBy = "transformador", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<LeituraTermica> leituras;
+    @OneToMany(mappedBy = "transformador", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Set<LeituraTermica> leituras = new HashSet<>();
 
-    @OneToMany(mappedBy = "transformador", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "transformador", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<AlertaTermico> alertas;
 }

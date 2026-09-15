@@ -5,7 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "leitura_termica")
@@ -14,10 +14,13 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
+/**
+ * Entidade Leitura Térmica
+ * <p>Histórico de medições periódicas<p/>*/
 public class LeituraTermica
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "temp_oleo", nullable = false)
@@ -34,6 +37,5 @@ public class LeituraTermica
     private Transformador transformador;
 
     @OneToOne(mappedBy = "leitura", cascade = CascadeType.ALL)
-    @JoinColumn(name = "leitura_id", nullable = false)
     private AlertaTermico alerta;
 }

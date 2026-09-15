@@ -1,4 +1,6 @@
 package com.example.monitoramento_transformadores.ENUM;
 
-public enum TipoAlertaTermico {
+public enum TipoAlertaTermico
+{
+    SOBREAQUECIMENTO
 }

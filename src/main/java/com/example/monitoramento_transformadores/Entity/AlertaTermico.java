@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "alerta_termico")
@@ -14,15 +13,19 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
+/**
+ * Entidade Alerta Térmico
+ * <p>Registro automático de anomalias operacionais<p/>*/
 public class AlertaTermico
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "data_alerta", nullable = false)
     private LocalDateTime dataAlerta;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipo")
     private TipoAlertaTermico tipo;
 
@@ -34,5 +37,6 @@ public class AlertaTermico
     private Transformador transformador;
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "leitura_id", nullable = false)
     private LeituraTermica leitura;
 }

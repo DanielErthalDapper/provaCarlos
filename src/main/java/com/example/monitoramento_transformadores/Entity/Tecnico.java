@@ -3,8 +3,9 @@ package com.example.monitoramento_transformadores.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "tecnico")
@@ -13,10 +14,13 @@ import java.util.UUID;
 @Setter
 @Getter
 @Builder
+/**
+ * Entidade Técnico
+ * <p>Profissional habilitado para manutenção<p/>*/
 public class Tecnico
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "nome", nullable = false)
@@ -31,6 +35,6 @@ public class Tecnico
     @Column(name = "email")
     private String email;
 
-    @ManyToMany(mappedBy = "tecnicos")
-    private Set<Transformador> transformadores;
+    @ManyToMany(mappedBy = "tecnicos", fetch = FetchType.LAZY)
+    private Set<Transformador> transformadores = new HashSet<>();
 }
